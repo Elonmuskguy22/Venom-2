@@ -11,6 +11,10 @@ RUN apt-get update && \
 
 COPY package.json .
 
+# Clear npm cache and remove node_modules directories
+RUN npm cache clean --force
+RUN rm -rf ~/node_modules 
+
 RUN npm install && npm install qrcode-terminal
 
 COPY . .
@@ -18,3 +22,5 @@ COPY . .
 EXPOSE 3000
 
 CMD ["node", "index.js", "--server"]
+
+CMD ["npm i -g forever && forever index.js && forever save && forever logs"] 
